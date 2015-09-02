@@ -1,1 +1,1 @@
-node ble_mac_addresses.js
+nodemon ble_mac_addresses.js
