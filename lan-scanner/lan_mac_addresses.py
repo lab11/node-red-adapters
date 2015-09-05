@@ -22,9 +22,10 @@ def main():
         client.loop()
         sleep(0.1)
     print("Starting scanner")
+    client.loop_start()
     try:
         while True:
-            client.loop()
+            #client.loop()
             addresses = get_mac_addresses()
             quoted_addresses = [("\"" + a + "\"") for a in addresses]
             addr_str = "[" + ", ".join(quoted_addresses) + "]"
@@ -34,6 +35,7 @@ def main():
                 print("Published msg {} on topic {} to broker at {}".format(msg, config["topic"], config["broker_addr"]))
             sleep(2)
     except KeyboardInterrupt:
+        client.disconnect()
         exit()
 
 def on_connect(client, userdata, flags, rc):
@@ -46,7 +48,7 @@ def on_connect(client, userdata, flags, rc):
         print(str(rc))
 
 def on_publish(client, userdata, mid):
-    pass
+    print("PUBLISH SUCCESS:"),
 
 def get_cmd_line_config():
     program_file = argv.pop(0) # don't need
